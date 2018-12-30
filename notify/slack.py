@@ -1,5 +1,5 @@
 import requests
-from notify.config import SLACK_URL
+from config import SLACK_URL
 import json
 
 
@@ -28,7 +28,10 @@ class Slack:
 	def send(self, message=None):
 		if not message:
 			message = self.data
-		return requests.post(SLACK_URL, data=json.dumps(message), headers=self.headers)
+		if len(message['attachments']):
+			return requests.post(SLACK_URL, data=json.dumps(message), headers=self.headers)
+		print('no extra data')
+		return None
 
 	def __call__(self, *args, **kwargs):
 		return self.data
