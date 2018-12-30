@@ -1,7 +1,7 @@
 from scrapy import Spider, signals
 from w3lib.http import basic_auth_header
 from datetime import datetime
-from notify.config import APIKEY
+from config import APIKEY
 from ..items import KithItem
 from scrapy_splash import SplashRequest
 from notify.slack import Slack
@@ -65,6 +65,7 @@ class KithSpider(Spider):
 		# this is the part where I get to send the data to slack
 		pprint(kithSlackContainer)
 		res = kithSlackContainer.send()
-		self.log.info(res.status_code)
-		self.log.info(res.text)
+		if res:
+			self.log.info(res.status_code)
+			self.log.info(res.text)
 		spider.logger.info('Spider closed: %s', spider.name)

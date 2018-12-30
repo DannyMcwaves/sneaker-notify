@@ -84,6 +84,7 @@ class NikeSpider(Spider):
 		# this is the part where I get to send the data to slack
 		pprint(nikeSlackContainer)
 		res = nikeSlackContainer.send()
-		self.log.info(res.status_code)
-		self.log.info(res.text)
+		if res:
+			self.log.info(res.status_code)
+			self.log.info(res.text)
 		spider.logger.info('Spider closed: %s', spider.name)

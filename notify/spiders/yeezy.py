@@ -4,7 +4,7 @@ from datetime import datetime
 from w3lib.http import basic_auth_header
 from ..items import YeezyItem
 from notify.slack import Slack
-from notify.config import APIKEY
+from config import APIKEY
 from scrapy_splash import SplashRequest
 from pprint import pprint
 import logging
@@ -58,6 +58,7 @@ class YeezySpider(Spider):
 	def spider_closed(self, spider):
 		pprint(yeezySlackContainer)
 		res = yeezySlackContainer.send()
-		self.log.info(res.status_code)
-		self.log.info(res.text)
+		if res:
+			self.log.info(res.status_code)
+			self.log.info(res.text)
 		spider.logger.info('Spider closed: %s', spider.name)
