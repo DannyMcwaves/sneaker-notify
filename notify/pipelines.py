@@ -6,11 +6,15 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from .items import KithItem, NikeItem, YeezyItem, AdidasItem
-from notify.util import check_availability, check_availability_yeezy
-from notify.config import KITH_CONTAINER, NIKE_CONTAINER, YEEZY_CONTAINER, ADIDAS_CONTAINER
+from notify.util import insert_data, create_tables
+from config import KITH_CONTAINER, NIKE_CONTAINER, YEEZY_CONTAINER, ADIDAS_CONTAINER
 from .spiders.kith import kithSlackContainer
 from .spiders.nike import nikeSlackContainer
 from .spiders.yeezy import yeezySlackContainer
+
+
+# start creating the tables.
+create_tables()
 
 
 class SnkrsNotifyPipeline(object):
@@ -22,9 +26,10 @@ class SnkrsNotifyPipeline(object):
 
 		# check for kith shoes
 		if isinstance(item, KithItem):
-			data = check_availability(KITH_CONTAINER, item)
-			if data:
-				KITH_CONTAINER.append(data)
+			data = item
+			res = insert_data('kith', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			print(res)
+			if res == 'Done':
 				both = zip(data['size'], data["sizes"])
 				size = "\n".join(["<{}|{}>".format(x[0], x[1]) for x in both])
 				kithSlackContainer.create_attachment({
@@ -42,9 +47,10 @@ class SnkrsNotifyPipeline(object):
 
 		# check for nike shoes.
 		if isinstance(item, NikeItem):
-			data = check_availability(NIKE_CONTAINER, item)
-			if data:
-				NIKE_CONTAINER.append(data)
+			data = item
+			res = insert_data('nike', name=str(data['name']), price=data['fullPrice'], image=data['image'], link=data['link'], date=data['date'])
+			print(res)
+			if res == 'Done':
 				nikeSlackContainer.create_attachment({
 					"title": data["name"],
 					"title_link": data["link"][0],
@@ -93,9 +99,10 @@ class SnkrsNotifyPipeline(object):
 
 		# check and run yeezy instance
 		if isinstance(item, YeezyItem):
-			data = check_availability_yeezy(YEEZY_CONTAINER, item)
-			if data:
-				YEEZY_CONTAINER.append(data)
+			data = item
+			res = insert_data('yeezy', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			print(res)
+			if res == 'Done':
 				yeezySlackContainer.create_attachment({
 					"title": data["name"],
 					"title_link": data["link"],
@@ -115,9 +122,10 @@ class SnkrsNotifyPipeline(object):
 
 		# check for an adidas instance and parse the result
 		if isinstance(item, AdidasItem):
-			data = check_availability(ADIDAS_CONTAINER, item)
-			print(data)
-			if data:
-				ADIDAS_CONTAINER.append(data)
+			data = item
+			res = insert_data('yeezy', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			print(res)
+			if res == 'Done':
+				print(data)
 
 		return item
