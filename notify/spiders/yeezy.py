@@ -27,7 +27,6 @@ class YeezySpider(Spider):
 		self.log = logging
 		self.log.critical("Yeezy STARTED.")
 		self.date = datetime.today().strftime('%Y-%m-%d')
-		# self.driver = webdriver.Firefox(executable_path='./geckodriver')
 
 	def start_requests(self):
 		yield SplashRequest("https://yeezysupply.com/collections/new-arrivals-footwear/", self.parse, args={'wait': 1}, splash_headers={'Authorization': basic_auth_header(APIKEY, '')})
