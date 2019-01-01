@@ -7,5 +7,8 @@ from .kith import KithSpider
 from .nike import NikeSpider
 from .yeezy import YeezySpider
 from .adidas import AdidasSpider
+from .rise import RiseSpider
+from .addict import AddictSpider
+from .nice_kicks import NiceKicksSpider
 
-__all__ = ["KithSpider", "NikeSpider", "YeezySpider", "AdidasSpider"]
+__all__ = ["KithSpider", "NikeSpider", "YeezySpider", "AdidasSpider", "RiseSpider", "AddictSpider", "NiceKicksSpider"]
