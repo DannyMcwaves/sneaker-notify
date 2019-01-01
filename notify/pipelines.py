@@ -5,12 +5,14 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from .items import KithItem, NikeItem, YeezyItem, AdidasItem
+from .items import KithItem, NikeItem, YeezyItem, AdidasItem, RiseItem, AddictItem, NiceKicksItem
 from notify.util import insert_data, create_tables
-from config import KITH_CONTAINER, NIKE_CONTAINER, YEEZY_CONTAINER, ADIDAS_CONTAINER
 from .spiders.kith import kithSlackContainer
 from .spiders.nike import nikeSlackContainer
 from .spiders.yeezy import yeezySlackContainer
+from .spiders.rise import riseSlackContainer
+from .spiders.nice_kicks import niceKicksSlackContainer
+from .spiders.addict import addictSlackContainer
 
 
 # start creating the tables.
@@ -20,7 +22,7 @@ create_tables()
 class SnkrsNotifyPipeline(object):
 
 	def __init__(self):
-		"""this is the initiation of the pipeline sequence"""
+		"""this is the initiation of the pipeline sequence. """
 
 	def process_item(self, item, spider):
 
@@ -127,5 +129,70 @@ class SnkrsNotifyPipeline(object):
 			print(res)
 			if res == 'Done':
 				print(data)
+
+		if isinstance(item, RiseItem):
+			data = item
+			res = insert_data('rise', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			if res == 'Done':
+				riseSlackContainer.create_attachment({
+					"title": data["name"],
+					"title_link": data["link"],
+					"fallback": "{} - {}".format(data["name"], data["price"]),
+					"author_name": "Rise 45",
+					"author_link": "https://rise45.com/collections/rise-new-arrivals",
+					"image_url": data["image"],
+					"color": "#efefef",
+					"fields": [
+						{
+							"title": "Price",
+							"value": data["price"],
+							"short": "true"
+						}
+					]
+				})
+
+		if isinstance(item, AddictItem):
+			data = item
+			res = insert_data('addict', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			print(res)
+			if res == 'Done':
+				addictSlackContainer.create_attachment({
+					"title": data["name"],
+					"title_link": data["link"],
+					"fallback": "{} - {}".format(data["name"], data["price"]),
+					"author_name": "Addict Miami",
+					"author_link": "https://www.addictmiami.com/collections/latest-products?sort_by=created-descending",
+					"image_url": data["image"],
+					"color": "#efefef",
+					"fields": [
+						{
+							"title": "Price",
+							"value": data["price"],
+							"short": "true"
+						}
+					]
+				})
+
+		if isinstance(item, NiceKicksItem):
+			data = item
+			res = insert_data('nicekicks', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			print(res)
+			if res == 'Done':
+				niceKicksSlackContainer.create_attachment({
+					"title": data["name"],
+					"title_link": data["link"],
+					"fallback": "{} - {}".format(data["name"], data["price"]),
+					"author_name": "Shop Nice Kicks",
+					"author_link": "https://shopnicekicks.com/collections/new-arrivals-1",
+					"image_url": data["image"],
+					"color": "#e8e8e8",
+					"fields": [
+						{
+							"title": "Price",
+							"value": data["price"],
+							"short": "true"
+						}
+					]
+				})
 
 		return item
