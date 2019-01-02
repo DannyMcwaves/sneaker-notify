@@ -32,12 +32,15 @@ kith_sql = sql_format_create.format('kith')
 nike_sql = sql_format_create.format('nike')
 yeezy_sql = sql_format_create.format('yeezy')
 adidas_sql = sql_format_create.format('adidas')
+rise_sql = sql_format_create.format('rise')
+addict_sql = sql_format_create.format('addict')
+nice_kicks_sql = sql_format_create.format('nicekicks')
 
 
 def create_tables():
 	try:
 		# execute the creation of this table
-		for i in [kith_sql, nike_sql, yeezy_sql, adidas_sql]:
+		for i in [kith_sql, nike_sql, yeezy_sql, adidas_sql, rise_sql, addict_sql, nice_kicks_sql]:
 			cursor.execute(i)
 		return cursor
 	except Exception as err:
