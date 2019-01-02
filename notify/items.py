@@ -8,7 +8,7 @@
 from scrapy.item import Item, Field
 
 
-__all__ = ["KithItem", "NikeItem", "YeezyItem", 'AdidasItem']
+__all__ = ["KithItem", "NikeItem", "YeezyItem", 'AdidasItem', 'RiseItem', 'AddictItem', 'NiceKicksItem']
 
 
 class KithItem(Item):
@@ -34,6 +34,50 @@ class AdidasItem(Item):
 
 
 class YeezyItem(Item):
+    date = Field()
+    price = Field()
+    image = Field()
+    link = Field()
+    name = Field()
+    size = Field()
+    sizes = Field()
+    colors = Field()
+
+
+class RiseItem(Item):
+    date = Field()
+    price = Field()
+    image = Field()
+    link = Field()
+    name = Field()
+    size = Field()
+    sizes = Field()
+    colors = Field()
+
+
+class AddictItem(Item):
+    date = Field()
+    price = Field()
+    image = Field()
+    link = Field()
+    name = Field()
+    size = Field()
+    sizes = Field()
+    colors = Field()
+
+
+class NiceKicksItem(Item):
+    date = Field()
+    price = Field()
+    image = Field()
+    link = Field()
+    name = Field()
+    size = Field()
+    sizes = Field()
+    colors = Field()
+
+
+class BaseItem(Item):
     date = Field()
     price = Field()
     image = Field()
