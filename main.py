@@ -4,6 +4,9 @@ from scrapy.utils.project import get_project_settings
 from notify.spiders import KithSpider
 from notify.spiders import NikeSpider
 from notify.spiders import YeezySpider
+from notify.spiders import RiseSpider
+from notify.spiders import AddictSpider
+from notify.spiders import NiceKicksSpider
 from notify.spiders import AdidasSpider
 import logging
 
@@ -20,6 +23,9 @@ runner = CrawlerRunner(get_project_settings())
 runner.crawl(NikeSpider)
 runner.crawl(KithSpider)
 runner.crawl(YeezySpider)
+runner.crawl(RiseSpider)
+runner.crawl(AddictSpider)
+runner.crawl(NiceKicksSpider)
 
 # join all of them to run separately
 job = runner.join()
