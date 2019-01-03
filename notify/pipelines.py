@@ -30,6 +30,7 @@ class SnkrsNotifyPipeline(object):
 		if isinstance(item, KithItem):
 			data = item
 			res = insert_data('kith', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			print(data)
 			print(res)
 			if res == 'Done':
 				both = zip(data['size'], data["sizes"])
@@ -154,6 +155,7 @@ class SnkrsNotifyPipeline(object):
 		if isinstance(item, AddictItem):
 			data = item
 			res = insert_data('addict', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			print(data)
 			print(res)
 			if res == 'Done':
 				addictSlackContainer.create_attachment({
