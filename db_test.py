@@ -30,11 +30,22 @@ data = [
  'price': '$220'}
 ]
 
+db = {
+ 'colors': 'White / Green / Blue',
+ 'date': '2019-01-03 21:57:33',
+ 'image': 'https://cdn.shopify.com/s/files/1/0094/2252/products/Adidas_Yung_1_G27031_3935_700x700_crop_center.progressive.jpg?v=1543535712',
+ 'link': 'https://kith.com/collections/footwear/products/adidas-originals-yung-1-white-green-blue',
+ 'name': 'adidas Originals Yung 1',
+ 'price': '$120.00',
+ 'size': ['https://kith.com/cart/add.js?id=18551300980805&quantity=1'],
+ 'sizes': ['13', '']
+}
+
 cursor = create_tables()
 
 d = random.choice(data)
 
-res = insert_data('yeezy', name=str(d['name']), price=d['price'], image=d['image'], link=d['link'], date=d['date'])
+res = insert_data('kith', name=str(db['name']), price=db['price'], image=db['image'], link=db['link'], date=db['date'])
 print(res)
 
 da = select_data('yeezy')
