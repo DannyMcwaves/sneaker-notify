@@ -54,7 +54,7 @@ def insert_data(table, name, price, image, link, date):
 		con.commit()
 		return 'Done'
 	except Exception as err:
-		print(err)
+		print(err.with_traceback(None))
 		return None
 
 
