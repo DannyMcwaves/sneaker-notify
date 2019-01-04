@@ -10,5 +10,8 @@ from .adidas import AdidasSpider
 from .rise import RiseSpider
 from .addict import AddictSpider
 from .nice_kicks import NiceKicksSpider
+from .nordstrom import NordstromSpider
 
-__all__ = ["KithSpider", "NikeSpider", "YeezySpider", "AdidasSpider", "RiseSpider", "AddictSpider", "NiceKicksSpider"]
+__all__ = [
+	"KithSpider", "NikeSpider", "YeezySpider", "AdidasSpider",
+	"RiseSpider", "AddictSpider", "NiceKicksSpider", "NordstromSpider"]
