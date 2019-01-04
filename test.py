@@ -8,6 +8,7 @@ from notify.spiders import AdidasSpider
 from notify.spiders import RiseSpider
 from notify.spiders import AddictSpider
 from notify.spiders import NiceKicksSpider
+from notify.spiders import NordstromSpider
 import logging
 
 
@@ -20,12 +21,13 @@ logging.getLogger('scrapy').propagate = False
 # CONFIGURE THE SCRAPY CRAWLER RUNNER SO...
 runner = CrawlerRunner(get_project_settings())
 # runner.crawl(AdidasSpider)
-runner.crawl(NikeSpider)
-runner.crawl(KithSpider)
-runner.crawl(YeezySpider)
-runner.crawl(RiseSpider)
-runner.crawl(AddictSpider)
-runner.crawl(NiceKicksSpider)
+# runner.crawl(NikeSpider)
+# runner.crawl(KithSpider)
+# runner.crawl(YeezySpider)
+# runner.crawl(RiseSpider)
+# runner.crawl(AddictSpider)
+# runner.crawl(NiceKicksSpider)
+runner.crawl(NordstromSpider)
 
 # join all of them to run separately
 job = runner.join()
