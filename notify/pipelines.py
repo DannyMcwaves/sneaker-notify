@@ -5,8 +5,8 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from .items import KithItem, NikeItem, YeezyItem, AdidasItem, RiseItem, AddictItem, NiceKicksItem
-from notify.util import insert_data, create_tables
+from .items import KithItem, NikeItem, YeezyItem, AdidasItem, RiseItem, AddictItem, NiceKicksItem, NordstromItem
+from notify.util import SQLite, Redis
 from .spiders.kith import kithSlackContainer
 from .spiders.nike import nikeSlackContainer
 from .spiders.yeezy import yeezySlackContainer
@@ -16,7 +16,9 @@ from .spiders.addict import addictSlackContainer
 
 
 # start creating the tables.
-create_tables()
+# sqlite = SQLite()
+# sqlite.create_tables()
+redis = Redis()
 
 
 class SnkrsNotifyPipeline(object):
@@ -29,10 +31,9 @@ class SnkrsNotifyPipeline(object):
 		# check for kith shoes
 		if isinstance(item, KithItem):
 			data = item
-			res = insert_data('kith', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
-			print(data)
+			res = redis.add('kith', data)
 			print(res)
-			if res == 'Done':
+			if res:
 				both = zip(data['size'], data["sizes"])
 				size = "\n".join(["<{}|{}>".format(x[0], x[1]) for x in both])
 				kithSlackContainer.create_attachment({
@@ -51,9 +52,9 @@ class SnkrsNotifyPipeline(object):
 		# check for nike shoes.
 		if isinstance(item, NikeItem):
 			data = item
-			res = insert_data('nike', name=str(data['name']), price=data['fullPrice'], image=data['image'], link=data['link'], date=data['date'])
+			res = redis.add('nike', data)
 			print(res)
-			if res == 'Done':
+			if res:
 				nikeSlackContainer.create_attachment({
 					"title": data["name"],
 					"title_link": data["link"][0],
@@ -103,9 +104,9 @@ class SnkrsNotifyPipeline(object):
 		# check and run yeezy instance
 		if isinstance(item, YeezyItem):
 			data = item
-			res = insert_data('yeezy', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			res = redis.add('yeezy', data)
 			print(res)
-			if res == 'Done':
+			if res:
 				yeezySlackContainer.create_attachment({
 					"title": data["name"],
 					"title_link": data["link"],
@@ -126,15 +127,16 @@ class SnkrsNotifyPipeline(object):
 		# check for an adidas instance and parse the result
 		if isinstance(item, AdidasItem):
 			data = item
-			res = insert_data('yeezy', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			res = redis.add('yeezy', data)
 			print(res)
-			if res == 'Done':
+			if res:
 				print(data)
 
 		if isinstance(item, RiseItem):
 			data = item
-			res = insert_data('rise', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
-			if res == 'Done':
+			res = redis.add('rise', data)
+			print(res)
+			if res:
 				riseSlackContainer.create_attachment({
 					"title": data["name"],
 					"title_link": data["link"],
@@ -154,10 +156,9 @@ class SnkrsNotifyPipeline(object):
 
 		if isinstance(item, AddictItem):
 			data = item
-			res = insert_data('addict', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
-			print(data)
+			res = redis.add('addict', data)
 			print(res)
-			if res == 'Done':
+			if res:
 				addictSlackContainer.create_attachment({
 					"title": data["name"],
 					"title_link": data["link"],
@@ -177,9 +178,9 @@ class SnkrsNotifyPipeline(object):
 
 		if isinstance(item, NiceKicksItem):
 			data = item
-			res = insert_data('nicekicks', name=str(data['name']), price=data['price'], image=data['image'], link=data['link'], date=data['date'])
+			res = redis.add('nicekicks', data)
 			print(res)
-			if res == 'Done':
+			if res:
 				niceKicksSlackContainer.create_attachment({
 					"title": data["name"],
 					"title_link": data["link"],
@@ -196,5 +197,10 @@ class SnkrsNotifyPipeline(object):
 						}
 					]
 				})
+
+		if isinstance(item, NordstromItem):
+			"""
+			"""
+			# print(item)
 
 		return item
