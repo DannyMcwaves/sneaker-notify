@@ -33,8 +33,8 @@ class NordstromSpider(Spider):
 			# pprint(products)
 			for product in products:
 				item = NordstromItem()
-				print(product.xpath('div/div/div[1]/section/div/div/div/img').extract())
-				print(product.xpath('div/div/div[3]/section/div/h4/p').extract())
+				# print(product.xpath('div/div/div[1]/section/div/div/div/img').extract())
+				# print(product.xpath('div/div/div[3]/section/div/h4/p').extract())
 				item['name'] = product.xpath('div/div/div[3]/section/div/h4/p').extract_first()
 				# item['price'] = product.xpath('div/div/div/div/span/text()').extract_first()
 				# item['image'] = "https:" + product.xpath('div/div/a/div/img[1]/@data-src').extract_first().replace('{width}', '400')
