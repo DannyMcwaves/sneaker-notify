@@ -22,7 +22,7 @@ queuelib==1.5.0
 redis==3.0.1
 requests==2.21.0
 Scrapy==1.5.1
-scrapy-splash==0.7.2
+scrapy-splash==0.8.0
 service-identity==18.1.0
 six==1.12.0
 Twisted==18.9.0
